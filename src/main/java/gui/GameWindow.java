@@ -38,7 +38,7 @@ public class GameWindow extends JInternalFrame implements VetoableChangeListener
     public void vetoableChange(PropertyChangeEvent pce)
             throws PropertyVetoException {
         if (pce.getPropertyName().equals(IS_CLOSED_PROPERTY)) {
-            boolean changed = ((Boolean) pce.getNewValue()).booleanValue();
+            boolean changed = (Boolean) pce.getNewValue();
             if (changed) {
                 int option = JOptionPane.showOptionDialog(this, "Close " +
                                 getTitle() + "?",

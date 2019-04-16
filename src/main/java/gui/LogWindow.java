@@ -56,13 +56,14 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, Veto
 
     @Override
     public void windowClosing(WindowEvent we) {
+        m_logSource.unregisterListener(this);
         System.out.println("aaaaaaaaaaaaaaaaaa");
     }
 
     public void vetoableChange(PropertyChangeEvent pce)
             throws PropertyVetoException {
         if (pce.getPropertyName().equals(IS_CLOSED_PROPERTY)) {
-            boolean changed = ((Boolean) pce.getNewValue()).booleanValue();
+            boolean changed = (Boolean) pce.getNewValue();
             if (changed) {
                 int option = JOptionPane.showOptionDialog(this, "Close " +
                                 getTitle() + "?",
@@ -71,6 +72,7 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, Veto
                         JOptionPane.QUESTION_MESSAGE,
                         null, null, null);
                 if (option != JOptionPane.YES_OPTION) {
+                    m_logSource.unregisterAllListener();
                     throw new PropertyVetoException("Cancelled",null);
                 }
             }
